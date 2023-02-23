@@ -1,0 +1,9 @@
+dependencies:
+- name: mysql
+  repository: https://charts.bitnami.com/bitnami
+  version: 9.3.4
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.5.2
+digest: sha256:bb34df5b6195f6f3a5a63cf91ad0a1ae0f56d409ed45f1ebab3b02c282b73df4
+generated: "2023-02-21T12:35:08.828291-08:00"

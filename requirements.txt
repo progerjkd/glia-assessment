@@ -1,0 +1,6 @@
+fastapi
+sqlalchemy
+sqlalchemy-utils
+uvicorn[standard]
+mysqlclient
+
