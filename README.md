@@ -17,7 +17,7 @@ The application is built as a container image. To build the image we can proceed
 docker build -t progerjkd/glia-jumble .
 ```
 
-## Scan for vulnerabilities:
+## Scan the image for vulnerabilities:
 ```
 docker scan progerjkd/glia-jumble
 ```
@@ -28,11 +28,21 @@ docker scan progerjkd/glia-jumble
 docker push progerjkd/glia-jumble 
 ```
 
+
+# App architecture
+
+![Kubernetes diagram ](diagram.png "Kubernetes diagram")
+
+Once deployed, the helm chart will provision the above architecture.
+There will be one service for the glia-jumble-app pod, and one service for the mysql pod.
+The the glia-jumble-app deployment will import a secret containing the database username and password.
+The mysql deployment will provision a persistent volume, and a persistent volume claim to store the database metadata directory.
+
 # Deploy the solution to minikube
 
 The diagram below ilustrates the kubernetes resources used in the helm chart.
 
-![Kubernetes diagram ](diagram.png "Kubernetes diagram")
+
 
 We can launch the application in a local minikube cluster, by using the provided helm chart.
 ```
@@ -79,6 +89,22 @@ http://127.0.0.1:64270/audit
 
 ```
 
+The log entries are composed by the following fields:
+
+* id - incremental value
+
+* timestamp - date and time of the request
+
+* url - the requested URL
+
+* payload - the arguments passed to the API
+
+* status - HTTP status code
+
+* duration - processing time in miliseconds
+
+
+
 We may see requests to / due to the kubernetes readiness probe.
 
 
@@ -86,3 +112,16 @@ We can optionally scale the deployment glia-jumble-app:
 ```
 kubectl scale --replicas=2 deployment glia-jumble-app
 ```
+
+
+# Extending the solution
+
+One can extend the API by rebuilding the docker image, pushing to the docker hub, and launching a new revision for the helm chart, or by using the build.sh script:
+
+```
+docker build -t progerjkd/glia-jumble .
+docker push progerjkd/glia-jumble
+
+helm upgrade glia-jumble-app -f helm/glia-jumble/values.yaml helm/glia-jumble/
+````
+

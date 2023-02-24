@@ -85,10 +85,6 @@ mysql:
   auth:
     createDatabase: true
     database: glia
-    rootPassword: asdf
+    rootPassword: asdf.32jh43f
     username: glia
-    password: gliapw
-
-
-username: glia
-password: gliapw
+    password: 9asDiu34bj.3

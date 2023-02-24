@@ -35,12 +35,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: DB_USER
-              value: {{ .Values.mysql.auth.username}}
+              valueFrom:
+                secretKeyRef:
+                  name: glia-jumble-app-auth
+                  key: username
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: glia-jumble-app-mysql
-                  key: mysql-password
+                  name: glia-jumble-app-auth
+                  key: password
             - name: DB_HOST
               value: {{ .Release.Name }}-mysql.default.svc.cluster.local
             - name: DB_NAME

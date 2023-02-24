@@ -9,7 +9,7 @@ def get_db():
     finally:
         db.close()
 
-def get_log(n: int):
+def get_entry(n: int):
     with get_db() as db:
         return db.query(Audit).order_by(Audit.timestamp.desc()).limit(n)
 
